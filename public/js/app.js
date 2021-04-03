@@ -1932,6 +1932,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'FormFeedback',
   data: function data() {
@@ -1974,14 +1978,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Messages',
   computed: {
     message: function message() {
       return this.$store.getters.getMessage;
+    },
+    error: function error() {
+      return this.$store.getters.getError;
     }
-  },
-  mounted: function mounted() {}
+  }
 });
 
 /***/ }),
@@ -2105,19 +2131,25 @@ Vue.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
   state: {
     message: {
       status: '',
-      text: ''
+      text: []
     },
-    order: null
+    error: false
   },
   getters: {
     getMessage: function getMessage(state) {
       return state.message;
+    },
+    getError: function getError(state) {
+      return state.error;
     }
   },
   mutations: {
     setMessage: function setMessage(state, payload) {
       state.message.status = payload.status;
       state.message.text = payload.message;
+    },
+    changeError: function changeError(state, payload) {
+      state.error = payload;
     }
   },
   actions: {
@@ -2131,7 +2163,15 @@ Vue.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
                 commit = _ref.commit;
                 _context.next = 3;
                 return axios.post('/api/createOrder', payload).then(function (response) {
+                  commit('changeError', false);
                   commit('setMessage', response.data);
+                })["catch"](function (error) {
+                  var e = {
+                    status: 'error',
+                    message: error.response.data.errors
+                  };
+                  commit('setMessage', e);
+                  commit('changeError', true);
                 });
 
               case 3:
@@ -38556,6 +38596,7 @@ var render = function() {
   return _c(
     "form",
     {
+      staticClass: "p-4 m-4 rounded",
       attrs: { id: "createOrder", name: "createOrder" },
       on: {
         submit: function($event) {
@@ -38578,12 +38619,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "name",
-            "aria-describedby": "nameHelp",
-            required: ""
-          },
+          attrs: { type: "text", id: "name", "aria-describedby": "nameHelp" },
           domProps: { value: _vm.name },
           on: {
             input: function($event) {
@@ -38615,12 +38651,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: {
-            type: "tel",
-            id: "phone",
-            "aria-describedby": "phoneHelp",
-            required: ""
-          },
+          attrs: { type: "tel", id: "phone", "aria-describedby": "phoneHelp" },
           domProps: { value: _vm.phone },
           on: {
             input: function($event) {
@@ -38635,7 +38666,7 @@ var render = function() {
         _c(
           "small",
           { staticClass: "form-text text-muted", attrs: { id: "phoneHelp" } },
-          [_vm._v("+34-999-999-999")]
+          [_vm._v("Required, format: +34-999-999-999")]
         )
       ]),
       _vm._v(" "),
@@ -38656,8 +38687,7 @@ var render = function() {
             id: "message",
             name: "message",
             "aria-describedby": "messageHelp",
-            placeholder: "Message ...",
-            required: ""
+            placeholder: "Message ..."
           },
           domProps: { value: _vm.message },
           on: {
@@ -38711,16 +38741,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      class: {
-        "text-success": _vm.message.status === "success",
-        "text-danger": _vm.message.status === "error"
-      }
-    },
-    [_vm._v(_vm._s(_vm.message.text))]
-  )
+  return _vm.message.status !== ""
+    ? _c("div", { staticClass: "message m-4 p-4 rounded bg-white" }, [
+        _vm.error
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "p-0 d-flex align-items-center justify-content-center flex-column"
+              },
+              _vm._l(_vm.message.text, function(text, index) {
+                return _c(
+                  "div",
+                  {
+                    key: index,
+                    staticClass:
+                      "p-0 d-flex align-items-center justify-content-center",
+                    class: {
+                      "text-success": _vm.message.status === "success",
+                      "text-danger": _vm.message.status === "error"
+                    }
+                  },
+                  [_vm._v(_vm._s(text[0]))]
+                )
+              }),
+              0
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            class: {
+              "text-success": _vm.message.status === "success",
+              "text-danger": _vm.message.status === "error"
+            }
+          },
+          [_vm._v(_vm._s(_vm.message.text[0]) + "\n    ")]
+        )
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

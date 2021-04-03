@@ -1,5 +1,9 @@
 <template>
-    <form id="createOrder" name="createOrder" @submit.prevent="submitForm">
+    <form
+        id="createOrder"
+        class="p-4 m-4 rounded"
+        name="createOrder"
+        @submit.prevent="submitForm">
         <div class="form-group">
             <label for="name">Your Name</label>
             <input
@@ -8,7 +12,7 @@
                 id="name"
                 class="form-control"
                 aria-describedby="nameHelp"
-                required>
+            >
             <small id="nameHelp" class="form-text text-muted">Required</small>
         </div>
         <div class="form-group">
@@ -19,8 +23,8 @@
                 id="phone"
                 class="form-control"
                 aria-describedby="phoneHelp"
-                required>
-            <small id="phoneHelp" class="form-text text-muted">+34-999-999-999</small>
+            >
+            <small id="phoneHelp" class="form-text text-muted">Required, format: +34-999-999-999</small>
         </div>
         <div class="form-group">
             <label for="message">Textarea</label>
@@ -31,7 +35,7 @@
                 name="message"
                 aria-describedby="messageHelp"
                 placeholder="Message ..."
-                required></textarea>
+            ></textarea>
             <small id="messageHelp" class="form-text text-muted">Required</small>
         </div>
         <button

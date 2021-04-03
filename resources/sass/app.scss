@@ -6,3 +6,16 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.message {
+    background: #000;
+    border: 1px solid $dark;
+    box-shadow: 12px 12px 2px 1px rgba(149, 97, 226, .2);
+}
+
+#createOrder {
+    background: #fff;
+    border: 1px solid $dark;
+    box-shadow: 12px 12px 2px 1px rgba(149, 97, 226, .2);
+}

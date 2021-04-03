@@ -29,4 +29,14 @@ class OrdersCreateRequest extends FormRequest
             'message' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'The name field is required',
+            'phone.required' => 'The phone field is required',
+            'phone.regex' => 'Phone number format is not correct',
+            'message.required' => 'The message field is required',
+        ];
+    }
 }
