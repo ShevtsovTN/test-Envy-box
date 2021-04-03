@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 import App from './components/App'
+import store from './store'
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,5 +32,6 @@ Vue.component('form-feedback', require('./components/FormFeedback.vue').default)
 
 const app = new Vue({
     el: '#app',
-    render: h => h(App)
+    render: h => h(App),
+    store: store
 });
